@@ -1,5 +1,4 @@
-﻿using BlazorAppWeb.Shared.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace BlazorAppWeb.Server.Data
 {
@@ -11,5 +10,6 @@ namespace BlazorAppWeb.Server.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }

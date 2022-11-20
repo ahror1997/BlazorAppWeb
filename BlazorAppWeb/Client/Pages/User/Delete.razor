@@ -38,6 +38,7 @@
     protected async Task RemoveUser(int Id)
     {
         await Http.DeleteAsync("api/user/" + Id);
+        Cancel();
     }
 
     void Cancel()
