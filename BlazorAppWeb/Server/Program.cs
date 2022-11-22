@@ -2,6 +2,8 @@ global using BlazorAppWeb.Shared.Models;
 using BlazorAppWeb.Server.Data;
 using BlazorAppWeb.Server.Interfaces;
 using BlazorAppWeb.Server.Services;
+using BlazorAppWeb.Server.Services.CategoryService;
+using BlazorAppWeb.Server.Services.ProductService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,7 @@ builder.Services.AddDbContext<DataContext>(options =>
     // postgresql
     options.UseNpgsql(connectionString);
 });
+
 builder.Services.AddTransient<IUser, UserManager>();
 
 builder.Services.AddControllersWithViews();
@@ -29,6 +32,9 @@ builder.Services.AddRazorPages();
 // Swagger Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
 var app = builder.Build();
