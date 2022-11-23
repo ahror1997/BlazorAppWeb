@@ -1,7 +1,5 @@
 global using BlazorAppWeb.Shared.Models;
 using BlazorAppWeb.Server.Data;
-using BlazorAppWeb.Server.Interfaces;
-using BlazorAppWeb.Server.Services;
 using BlazorAppWeb.Server.Services.CategoryService;
 using BlazorAppWeb.Server.Services.ProductService;
 using Microsoft.EntityFrameworkCore;
@@ -23,8 +21,6 @@ builder.Services.AddDbContext<DataContext>(options =>
     // postgresql
     options.UseNpgsql(connectionString);
 });
-
-builder.Services.AddTransient<IUser, UserManager>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
