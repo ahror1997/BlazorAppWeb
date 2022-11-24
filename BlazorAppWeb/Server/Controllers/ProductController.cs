@@ -1,5 +1,6 @@
 ﻿using BlazorAppWeb.Server.Services.ProductService;
 using BlazorAppWeb.Shared;
+using BlazorAppWeb.Shared.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorAppWeb.Server.Controllers
@@ -43,10 +44,10 @@ namespace BlazorAppWeb.Server.Controllers
             return Ok(result);
         }
 
-        [HttpGet("search/{searchText}")]
-        public async Task<ActionResult<ServiceResponse<List<Product>>>> SearchProducts(string searchText)
+        [HttpGet("search/{searchText}/{page}")]
+        public async Task<ActionResult<ServiceResponse<ProductSearchResult>>> SearchProducts(string searchText, int page = 1)
         {
-            var result = await productService.SearchProducts(searchText);
+            var result = await productService.SearchProducts(searchText, page);
             return Ok(result);
         }
 
@@ -54,6 +55,13 @@ namespace BlazorAppWeb.Server.Controllers
         public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProductSearchSuggestions(string searchText)
         {
             var result = await productService.GetProductSearchSuggestions(searchText);
+            return Ok(result);
+        }
+
+        [HttpGet("featured")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetFeaturedProducts()
+        {
+            var result = await productService.GetFeaturedProducts();
             return Ok(result);
         }
     }

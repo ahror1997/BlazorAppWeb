@@ -8,7 +8,10 @@
         Task<ServiceResponse<Product>> GetProduct(int id);
         Task<Product> CreateProduct(Product product);
         string Message { get; set; }
-        Task SearchProducts(string searchText);
+        int CurrentPage { get; set; }
+        int PageCount { get; set; }
+        string LastSearchText { get; set; }
+        Task SearchProducts(string searchText, int page);
         Task<List<string>> GetProductSearchSuggestions(string searchText);
     }
 }
