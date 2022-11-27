@@ -6,16 +6,23 @@ namespace BlazorAppWeb.Client.Services.AuthService
     public class AuthService : IAuthService
     {
         private readonly HttpClient httpClient;
+        private readonly AuthenticationStateProvider authenticationStateProvider;
 
-        public AuthService(HttpClient httpClient)
+        public AuthService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider)
         {
             this.httpClient = httpClient;
+            this.authenticationStateProvider = authenticationStateProvider;
         }
 
         public async Task<ServiceResponse<bool>> ChangePassword(UserChangePassword request)
         {
             var result = await httpClient.PostAsJsonAsync("api/auth/change-password", request.Password);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<bool>>();
+        }
+
+        public async Task<bool> IsUserAuthenticated()
+        {
+            return (await authenticationStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
         }
 
         public async Task<ServiceResponse<string>> Login(UserLogin request)

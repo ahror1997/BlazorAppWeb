@@ -9,6 +9,7 @@ using BlazorAppWeb.Client.Services.CategoryService;
 using Blazored.LocalStorage;
 using BlazorAppWeb.Client.Services.CartService;
 using BlazorAppWeb.Client.Services.AuthService;
+using BlazorAppWeb.Client.Services.OrderService;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();

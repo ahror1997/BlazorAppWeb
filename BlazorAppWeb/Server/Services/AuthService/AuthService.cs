@@ -12,12 +12,16 @@ namespace BlazorAppWeb.Server.Services.AuthService
     {
         private readonly DataContext dataContext;
         private readonly IConfiguration configuration;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public AuthService(DataContext dataContext, IConfiguration configuration)
+        public AuthService(DataContext dataContext, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             this.dataContext = dataContext;
             this.configuration = configuration;
+            this.httpContextAccessor = httpContextAccessor;
         }
+
+        public int GetUserId() => int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
         public async Task<ServiceResponse<string>> Login(string email, string password)
         {
