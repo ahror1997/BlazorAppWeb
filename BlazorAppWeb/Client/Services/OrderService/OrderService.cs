@@ -29,15 +29,17 @@ namespace BlazorAppWeb.Client.Services.OrderService
             return result.Data;
         }
 
-        public async Task PlaceOrder()
+        public async Task<string> PlaceOrder()
         {
             if (await IsUserAuthenticated())
             {
-                await httpClient.PostAsync("api/order", null);
+                var result = await httpClient.PostAsync("api/payment/checkout", null);
+                var url = await result.Content.ReadAsStringAsync();
+                return url;
             }
             else
             {
-                navigationManager.NavigateTo("login");
+                return "login";
             }
         }
 
