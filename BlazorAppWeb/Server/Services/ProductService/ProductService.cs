@@ -9,11 +9,14 @@ namespace BlazorAppWeb.Server.Services.ProductService
     {
         private readonly DataContext dataContext;
 
+		// конструктор класса (берем DataContext класс с помошю Dependency Injenction)
         public ProductService(DataContext dataContext)
         {
             this.dataContext = dataContext;
         }
 
+
+		// функция для взятия все продукты (Products) из БД с связанными вариантами (Variants)
         public async Task<ServiceResponse<List<Product>>> GetProductsAsync()
         {
             var response = new ServiceResponse<List<Product>>()
@@ -23,6 +26,7 @@ namespace BlazorAppWeb.Server.Services.ProductService
             return response;
         }
 
+		// функция для взятия одного продукта с помошю ID
         public async Task<ServiceResponse<Product>> GetProductAsync(int id)
         {
             var response = new ServiceResponse<Product>();
@@ -39,6 +43,7 @@ namespace BlazorAppWeb.Server.Services.ProductService
             return response;
         }
 
+		// функция для взятия список продуктов с помошю categoryUrl
         public async Task<ServiceResponse<List<Product>>> GetProductByCategoryAsync(string categoryUrl)
         {
             var response = new ServiceResponse<List<Product>>()
@@ -49,6 +54,7 @@ namespace BlazorAppWeb.Server.Services.ProductService
             return response;
         }
 
+		// функция для создания нового продукта
         public async Task<ServiceResponse<Product>> CreateProduct(Product product)
         {
             dataContext.Products.Add(product);
@@ -56,6 +62,7 @@ namespace BlazorAppWeb.Server.Services.ProductService
             return new ServiceResponse<Product>() { Data = product };
         }
 
+		// функция для поиска продукта с помощю текста (searchText) 
         public async Task<ServiceResponse<ProductSearchResult>> SearchProducts(string searchText, int page)
         {
             var data = await dataContext.Products
@@ -82,6 +89,7 @@ namespace BlazorAppWeb.Server.Services.ProductService
             return response;
         }
 
+		// функция для взятия список поисковых подсказков с помощю текста (searchText) 
         public async Task<ServiceResponse<List<string>>> GetProductSearchSuggestions(string searchText)
         {
             var products = await dataContext.Products
@@ -116,6 +124,7 @@ namespace BlazorAppWeb.Server.Services.ProductService
             return new ServiceResponse<List<string>>() { Data = result };
         }
 
+		// функция для взятия избранных товаров
         public async Task<ServiceResponse<List<Product>>> GetFeaturedProducts()
         {
             var response = new ServiceResponse<List<Product>>()
